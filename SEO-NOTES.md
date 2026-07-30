@@ -65,6 +65,60 @@ subtemas. La cobertura de zona se nombra explícita en texto plano.
 taller atiende de verdad. Páginas doorway finas hunden el dominio
 entero. Máximo 3–6 para un negocio de Gran Asunción.
 
+## Modificadores de intención comercial (obra grande)
+
+Este es el punto que faltaba en la versión anterior de este archivo.
+
+Para proyectos de ticket alto, el sustantivo solo **no sirve** ni para
+SEO ni para Google Ads. "Casa", "piscina" o "quinta" traen tráfico
+informativo y turístico —gente buscando alquilar una quinta, ver fotos
+de casas, comprar una piscina de lona— y en Ads queman presupuesto con
+clics irrelevantes.
+
+**Regla: sustantivo + modificador de obra.** El modificador es lo que
+convierte una búsqueda ambigua en una búsqueda de contratación.
+
+| ❌ Demasiado amplio | ✅ Con intención comercial |
+|---|---|
+| casa | **construcción de casas**, casas **llave en mano**, **constructora** |
+| piscina | **construcción de piscinas**, piscinas **de hormigón**, **piscineros** |
+| quinta | **construcción de quintas**, **refacción** de quintas |
+| patio | **construcción de quinchos**, **decks y pérgolas** |
+| baño / cocina | **remodelación** de baños, **reforma** de cocina |
+| terreno | **ampliación**, **obra nueva**, **dirección de obra** |
+
+**Modificadores que más pesan en Paraguay:**
+
+- `llave en mano` — el equivalente a "key ready"/turnkey. Alta intención:
+  quien lo busca quiere contratar, no averiguar.
+- `construcción de` — el prefijo comercial por defecto
+- `constructora` / `empresa constructora` — búsqueda de proveedor
+- `remodelación`, `refacción`, `ampliación` — obra sobre lo existente
+- `presupuesto` — `presupuesto construcción casa Paraguay`
+- `precio por m2` — `cuánto sale construir por metro cuadrado Paraguay`
+- `plano y construcción`, `diseño y construcción` — paquete completo
+
+**Aplicación:**
+
+- **H1** = servicio principal CON modificador + ciudad. No "Casas en
+  Asunción" sino "Construcción de casas llave en mano en Asunción".
+- **Cada tarjeta de servicio** lleva el modificador en el título, no
+  sólo en el cuerpo. El `<h3>` es lo que Google lee como tema.
+- **Alt de imágenes** con la frase completa: "Construcción de piscina de
+  hormigón en una quinta de Gran Asunción".
+- **FAQ** captura `precio` y `cuánto cuesta` (patrón 4), que en obra
+  grande es el que más volumen tiene.
+- **Google Ads:** las keywords amplias (`casa`, `piscina`) van como
+  **negativas**. Se puja sólo sobre frases con modificador de obra.
+  Sumar negativas de intención equivocada: `alquiler`, `alquilar`,
+  `venta`, `comprar`, `usada`, `lona`, `inflable`, `hotel`, `fotos`,
+  `planos gratis`, `curso`, `empleo`, `trabajo`.
+
+**Nota de alcance:** casas, piscinas, quinchos y quintas son trabajo de
+**constructora**, no de carpintería. El schema correcto sigue siendo
+`GeneralContractor`, y el vocabulario del sitio debe ser de obra
+(`obra`, `presupuesto`, `llave en mano`, `m2`), no de mueblería.
+
 ## Qué NO trasladar de muebleria
 
 El párrafo SEO de 150–250 palabras por categoría (ver `lib/categories.ts`)

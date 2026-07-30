@@ -233,6 +233,35 @@ Línea final: `© 2026 Constructora Vera — Hecho en Paraguay 🇵🇾`
 ### Barra sticky móvil (<768px)
 Primaria `WhatsApp` (verde) · secundaria `Llamar`
 
+### `<head>` — copy literal
+
+- `<title>`:
+  `Construcción de casas llave en mano en Asunción | Constructora Vera`
+- `<meta name="description">`:
+  `Constructora en Asunción y Gran Asunción: casas llave en mano,
+  piscinas de hormigón, quinchos y quintas. Presupuesto sin costo y
+  precio cerrado por escrito.`
+- `og:title` = el `<title>` · `og:description` = la description
+- `og:type` `website` · `og:locale` `es_PY` · `og:site_name`
+  `Constructora Vera`
+- **Sin** `og:image` (no hay imagen), **sin** `canonical` ni `og:url`
+  (no hay dominio todavía) → van a la lista de placeholders §9
+- Favicon: SVG inline en data-URI, cuadrado `--accent` con la letra `V`
+  en `Archivo` 700 blanco
+
+### Banner de consentimiento — copy literal
+
+- Texto: `Usamos cookies para entender cómo se usa el sitio y mejorarlo.
+  Podés aceptarlas o seguir sin ellas.`
+- Botón primario: `Aceptar`
+- Botón secundario: `Seguir sin aceptar`
+- Enlace: `Política de privacidad` → `href="#"` +
+  `<!-- CONECTAR: política de privacidad -->`
+
+Nada pre-marcado. Aparece abajo, no bloquea el contenido, y por encima
+de la barra sticky móvil. La elección se guarda en `localStorage` para
+no volver a mostrarlo.
+
 ---
 
 ## 5. Árbol de archivos
@@ -326,8 +355,9 @@ título. Siempre con `construcción de` / `llave en mano` / `refacción`.
 6. Reseñas de Google → reponer la sección de reseñas
 7. Métodos de pago → agregar sección de pagos
 8. Teléfono fijo, horarios, dirección física, Facebook/Instagram
-9. Dominio final → quitar `noindex`, poner canonical y og:url
+9. Dominio final → quitar `noindex`, poner canonical, og:url y og:image
 10. Endpoint del formulario
+11. Página de política de privacidad (el banner enlaza a `#`)
 
 ---
 

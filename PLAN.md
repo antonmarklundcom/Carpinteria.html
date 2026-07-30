@@ -1,55 +1,69 @@
 # Plan — Carpintería (sitio HTML estático)
 
-Base de conocimiento trasladada desde el repo hermano `muebleria`
-(Next.js, tienda de muebles Paraguay) para construir Carpintería como
-un sitio **HTML estático** en vez de Next.js/Node. Mismo mercado
-(muebles/madera en Paraguay), misma lógica de negocio, distinta stack.
+> **PRECEDENCIA — LEER PRIMERO.**
+> El skill `paraguay-local-site` es la autoridad sobre estructura, diseño,
+> técnica y QA. Cuando exista, `BUILD-SPEC.md` es la autoridad sobre esta
+> obra en concreto. Este archivo y sus hermanos (`STRUCTURE.md`,
+> `SEO-NOTES.md`, `CONTENT-GUIDE.md`) son **material de fondo**: aportan
+> el ángulo de marca heredado de `muebleria`, nada más. **Donde estos
+> documentos contradigan al skill o al BUILD-SPEC, gana el skill.**
 
-## Por qué HTML estático en vez de Node
+## Estado actual
 
-- Sin servidor vivo que mantener, sin build de Next, deploy directo a
-  Hostinger (o cualquier hosting) subiendo archivos.
-- Ideal para un taller de carpintería: catálogo de servicios/productos
-  a medida, no un carrito de compra complejo. El flujo real de venta
-  es "mirá fotos → escribime por WhatsApp → cotizamos a medida", así
-  que no hace falta checkout, pagos online ni base de datos.
-- Usar el skill **paraguay-local-site** (modo 1: one-pager WhatsApp-first
-  vendedora; modo 2: expansión a sitio de 6–12 páginas con servicios,
-  zonas y precios) en vez de reconstruir la arquitectura Next.js.
+Repo vacío salvo estos documentos. **Todavía no se puede construir**:
+falta el bloque de intake del skill (§0). Sin esos datos cualquier build
+inventaría nombre, ciudad, número de WhatsApp, años y garantías — lo que
+el skill prohíbe explícitamente (§5, anti-fabricación).
 
-## Qué se reutiliza de `muebleria`
+## Decisiones ya tomadas (Opus, LÄGE 0)
 
-1. **Tono y ángulo de copywriting** — ver `CONTENT-GUIDE.md`.
-2. **Estructura de SEO/metadata** — ver `SEO-NOTES.md`.
-3. **Arquitectura de páginas** (adaptada a HTML estático) — ver `STRUCTURE.md`.
-4. **Reglas de negocio** que siguen aplicando:
-   - WhatsApp como canal principal de contacto/venta (`wa.me` con
-     mensaje pre-armado, ver `lib/whatsapp.ts` en muebleria).
-   - Precios y costos de envío/armado siempre visibles, sin "consultar
-     precio" ni letra chica.
-   - Nunca prometer cuotas, financiación o beneficios que no estén
-     confirmados por escrito con el proveedor/banco real.
-   - Contacto directo (WhatsApp) en vez de tickets de soporte — refuerza
-     la idea de "taller local, no cadena".
+- **Stack:** HTML estático, un solo `index.html` con CSS inline y JS
+  vanilla mínimo. Sin build, sin npm, sin Node. Deploy a Hostinger
+  copiando archivos a `public_html/`.
+- **Pista de diseño: PC — TALLER.** Es la asignación del skill para
+  `carpintero` (ver `references/design-lib-py.md`, tabla por oficio).
+  No se corre Claude Design: la pista ya existe y se copia literal.
+- **Conversión: whatsapp-first.** Carpintería no es un oficio de
+  urgencia; no aplica el modo llamada-first (ese es para cerrajería,
+  destapes, urgencias 24h).
+- **Schema JSON-LD: `GeneralContractor`.** Ver `SEO-NOTES.md` — no
+  existe un tipo `Carpenter` en schema.org.
 
-## Qué NO se traslada tal cual
+## Flujo de trabajo (modos del skill)
 
-- Todo lo específico de e-commerce de muebleria (carrito, checkout,
-  Pagopar, webhooks, Google Sheets, R2, GoHighLevel) — no aplica a un
-  sitio HTML estático sin backend. Si Carpintería más adelante quiere
-  cotizador online o checkout, se evalúa aparte.
-- El catálogo de productos de muebleria (roperos, comedores, etc.) no
-  es el de Carpintería — hay que levantar el catálogo real del cliente
-  (categorías de carpintería: muebles a medida, puertas, aberturas,
-  decks, restauración, etc.) antes de escribir copy.
+1. **LÄGE 0 — BUILD-SPEC** (Opus): se completa el intake, se fijan
+   tokens de diseño, orden de secciones y **toda la copy literal**, y se
+   escribe `BUILD-SPEC.md`. Ninguna línea puede quedar abierta a
+   interpretación.
+2. **Ejecución** (Sonnet): prompt único — *"Implementá BUILD-SPEC.md
+   exacto. No te desvíes. Preguntá ante una duda en vez de adivinar."*
+3. **LÄGE 2** (opcional, si el cliente aprueba): expansión a sitio
+   completo reusando los mismos tokens. El diseño **nunca** cambia en
+   läge 2.
 
-## Próximos pasos
+## Qué se hereda de `muebleria` (y qué no)
 
-1. Confirmar con el cliente: nombre real del negocio, ciudad/zona de
-   Paraguay, número de WhatsApp, rubro exacto (carpintería general,
-   muebles a medida, aberturas, ebanistería...), servicios/productos,
-   fotos disponibles.
-2. Ejecutar el skill `paraguay-local-site` modo 1 para generar el
-   one-pager HTML vendedor.
-3. Revisar con el cliente y, si aprueba, expandir a modo 2 (sitio
-   completo) reusando el mismo diseño.
+**Se hereda** — únicamente tono y ángulo de venta, ver `CONTENT-GUIDE.md`:
+transparencia de precio, taller local frente a cadena, contraste contra
+el material barato, WhatsApp como canal real de venta.
+
+**NO se hereda:**
+- La arquitectura Next.js (rutas, componentes, SSG) — irrelevante aquí.
+- Todo el e-commerce: carrito, checkout, Pagopar, webhooks, Google
+  Sheets, R2, GoHighLevel. No hay backend en este proyecto.
+- El catálogo de muebleria (roperos, comedores...). Carpintería tiene
+  otros servicios y hay que levantarlos del cliente real.
+- Cualquier dato concreto de muebleria: RUC, número de WhatsApp, datos
+  bancarios, precios. **Nada de eso se copia** — pertenece a otro
+  negocio.
+
+## Bloqueantes antes de escribir BUILD-SPEC.md
+
+- [ ] ¿Demo de prospecto o cliente real con datos?
+- [ ] Nombre real del negocio
+- [ ] Ciudad + departamento, y barrios/zonas que atiende de verdad
+- [ ] Número de WhatsApp (formato `5959XXXXXXXX`)
+- [ ] Servicios reales (3–6)
+- [ ] ¿Hay fotos de trabajos? ¿Hay reseñas reales de Google?
+- [ ] ¿Se muestran precios en Gs. o "presupuesto sin costo"?
+- [ ] RUC / factura legal: ¿sí o se oculta la fila?

@@ -1,63 +1,84 @@
-# Estructura de sitio (adaptada de Next.js a HTML estático)
+# Estructura del sitio
 
-## Cómo estaba armado muebleria.com.py (Next.js)
+> **PRECEDENCIA.** El orden de secciones y las reglas de layout los fija
+> el skill `paraguay-local-site` (§2 y §3). Este archivo **no** define
+> una estructura propia — sólo registra cómo se mapea el proyecto viejo
+> de `muebleria` y qué decisiones ya se tomaron para Carpintería.
+> Si algo acá contradice al skill, gana el skill.
+
+## De dónde venimos: muebleria.com.py (Next.js)
 
 ```
 app/
-├── page.tsx                      # Home: hero, categorías, destacados, bloque diferenciador
-├── (catalogo)/[categoria]/       # N landings SEO, una por categoría de producto
-├── (catalogo)/producto/[slug]/   # Fichas de producto individuales (JSON-LD Product)
-├── checkout/                     # (no aplica a Carpintería HTML estático)
-├── nosotros/                     # Historia de marca y materiales
-└── api/                          # (no aplica — sin backend)
+├── page.tsx                      # Home
+├── (catalogo)/[categoria]/       # landings SEO por categoría
+├── (catalogo)/producto/[slug]/   # fichas de producto
+├── checkout/  ── NO APLICA (sin backend)
+├── nosotros/                     # historia de marca y materiales
+└── api/       ── NO APLICA (sin backend)
 ```
 
-## Equivalente recomendado para Carpintería (HTML estático)
+Lo único con valor trasladable es el patrón **"una landing por
+categoría con copy propio y geolocalizado"**, que en el skill se
+convierte en las páginas `/servicios/[servicio]/` de LÄGE 2.
 
-**Modo 1 (one-pager, punto de partida):**
+## A dónde vamos
+
+### LÄGE 1 — one-pager (punto de partida)
+
+Un solo `index.html`. **El orden de las 13 secciones lo dicta el skill
+§2 y no se altera** (header sticky → hero → franja de confianza →
+servicios → banda full-bleed → cómo trabajamos → trabajos realizados →
+reseñas → precios → zonas → FAQ → contacto → footer, más FAB de
+WhatsApp y barra sticky móvil).
+
+Layout por sección para la pista **PC — Taller**, copiado de
+`references/design-lib-py.md`:
+
+- hero **(b)** full-bleed foto de trabajo con tarjeta overlay abajo a la
+  izquierda que cruza el borde de sección
+- confianza **(h)** banda oscura
+- servicios **(d)** bento con intervalos de precio
+- cómo trabajamos **(e)** stepper con marcadores numéricos
+- banda full-bleed **(h)** acento + CTA WhatsApp
+- trabajos **(c)** antes/después
+- reseñas **(d)**
+- zonas **(c)**
+- FAQ **(f)**
+- contacto **(a)**
+
+### LÄGE 2 — sitio completo (sólo si el cliente aprueba)
+
+URLs de directorio, no archivos `.html` sueltos:
 
 ```
-index.html          # Hero + servicios destacados + por qué elegirnos +
-                     # galería de trabajos + WhatsApp CTA + footer con NAP
+/
+/servicios/[servicio]/     ← una por servicio principal, UN keyword c/u
+/zonas/[ciudad]/           ← 3–6 ciudades REALMENTE atendidas
+/precios/
+/sobre-nosotros/
+/contacto/
 ```
 
-**Modo 2 (sitio completo, si el cliente aprueba expandir):**
+Archivos compartidos `assets/css/site.css` + `assets/js/site.js`, con la
+CSS crítica inline en cada página. Obligatorio: `sitemap.xml`,
+`robots.txt`, canonical por página, `Service` schema en servicios,
+`BreadcrumbList`, 404.
 
-```
-/index.html
-/nosotros.html                  # equivalente a app/nosotros — historia del
-                                 # taller, materiales/técnicas, por qué local
-/servicios/{servicio}.html       # una página por servicio, mismo patrón que
-                                 # las landings de categoría de muebleria:
-                                 # problema local → diferenciador → variantes
-                                 # → precios/rango → CTA WhatsApp
-/zonas/{ciudad}.html             # una página por zona de cobertura (si el
-                                 # taller cubre varias ciudades/barrios)
-/precios.html                    # rango de precios por tipo de trabajo
-/galeria.html                    # fotos de trabajos terminados
-/sitemap.xml
-/robots.txt
-```
+**Regla dura:** el diseño de läge 2 es idéntico al de läge 1. Una
+expansión que se ve distinta de la demo que el cliente compró es un bug.
 
-## Componentes reutilizables (patrón, no código — HTML no tiene componentes)
+## Patrón de footer heredado de muebleria
 
-- **Header**: logo, links a servicios, botón WhatsApp siempre visible.
-- **Footer** (ver patrón real de `components/Footer.tsx` en muebleria):
-  - Columna 1: nombre + descripción corta + RUC/dirección (NAP).
-  - Columna 2: links a servicios/categorías.
-  - Columna 3: contacto — WhatsApp con número real, link a "nosotros".
-  - Línea final: copyright + "Hecho en Paraguay".
-- **Bloque de confianza** (equivalente al "anti-humedad" de muebleria):
-  un bloque que explica el problema del mercado (trabajo mal hecho,
-  materiales baratos, changas sin garantía) y cómo el taller lo resuelve.
-- **Botón/chip flotante de WhatsApp** con mensaje pre-armado según la
-  página (`https://wa.me/<numero>?text=<mensaje codificado>`).
+`components/Footer.tsx` tenía una estructura que funcionó y se puede
+replicar en HTML plano:
 
-## Reglas de negocio a mantener
+- Col 1: nombre + descripción corta + NAP (RUC, ciudad)
+- Col 2: links a servicios
+- Col 3: contacto — WhatsApp con el número **visible como texto**, no
+  sólo como link
+- Línea final: copyright + "Hecho en Paraguay 🇵🇾"
 
-- Un solo precio o rango visible por servicio — sin "a consultar" cuando
-  se pueda dar un rango honesto.
-- WhatsApp como canal único de conversión, con mensaje pre-armado
-  distinto por página/servicio (mismo patrón que `waLink()` en muebleria).
-- No prometer nada (financiación, plazos, garantías) que no esté
-  confirmado por el dueño del taller.
+El skill añade requisitos que muebleria no tenía y que son obligatorios:
+NAP idéntico al del resto del sitio, horarios, redes sociales
+(Facebook/Instagram pesan más en PY que en Europa) y link de privacidad.

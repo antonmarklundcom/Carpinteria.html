@@ -278,6 +278,13 @@
   .form-card textarea{min-height:96px; resize:vertical;}
   .form-card .btn{width:100%;}
   .form-note{margin-top:16px; font-size:14px; color:var(--muted); text-align:center;}
+  .hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}
+  .form-alert{
+    padding:14px 16px; border-radius:12px; margin-bottom:18px;
+    font-size:15px; line-height:1.5; border:1px solid;
+  }
+  .form-alert-ok{background:#ECFDF3; border-color:#A6E7BF; color:#12613A;}
+  .form-alert-error{background:var(--accent-tint); border-color:#F0B79A; color:#7C2D0C;}
 
   /* ---------- FOOTER ---------- */
   footer.site{background:var(--dark); color:rgba(255,255,255,.75); padding:72px 0 32px;}
@@ -593,14 +600,23 @@
         </div>
       </div>
       <div class="form-card fade-up">
-        <form action="#" method="post">
-          <!-- CONECTAR: endpoint del formulario -->
+        <div id="form-ok" class="form-alert form-alert-ok" hidden>
+          Gracias, recibimos tu consulta. Te respondemos a la brevedad. Si es urgente, escribinos por WhatsApp.
+        </div>
+        <div id="form-error" class="form-alert form-alert-error" hidden>
+          No pudimos enviar tu consulta. Escribinos por WhatsApp y la vemos al instante.
+        </div>
+        <form action="enviar.php" method="post">
           <label for="nombre">Nombre</label>
           <input type="text" id="nombre" name="nombre" required>
           <label for="whatsapp">WhatsApp</label>
           <input type="tel" id="whatsapp" name="whatsapp" required>
           <label for="mensaje">¿Qué querés construir?</label>
           <textarea id="mensaje" name="mensaje" required></textarea>
+          <div class="hp" aria-hidden="true">
+            <label for="empresa">Empresa</label>
+            <input type="text" id="empresa" name="empresa" tabindex="-1" autocomplete="off">
+          </div>
           <button type="submit" class="btn btn-accent">Enviar consulta</button>
         </form>
         <p class="form-note">Presupuesto sin costo · Respondemos por WhatsApp</p>
@@ -726,6 +742,19 @@
       localStorage.setItem('consent-py', 'rejected');
       consent.classList.remove('show');
     });
+  })();
+
+  // Resultado del envío del formulario (enviar.php redirige con ?ok=1 / ?error=1)
+  (function(){
+    var params = new URLSearchParams(window.location.search);
+    var id = params.has('ok') ? 'form-ok' : (params.has('error') ? 'form-error' : null);
+    if(!id) return;
+    var box = document.getElementById(id);
+    if(!box) return;
+    box.hidden = false;
+    box.scrollIntoView({behavior:'smooth', block:'center'});
+    // Limpiamos la query para que un refresh no repita el mensaje.
+    history.replaceState(null, '', window.location.pathname + window.location.hash);
   })();
 </script>
 

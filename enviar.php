@@ -10,10 +10,31 @@
  * El correo del visitante va en Reply-To, que es lo correcto.
  */
 
-// ── CONFIGURAR ──────────────────────────────────────────────────────
-const DESTINO  = 'tucorreo@ejemplo.com';        // a dónde llegan las consultas
-const REMITENTE = 'web@tudominio.com';          // casilla creada en hPanel → Emails
-const SITIO    = 'Constructora Vera';
+// ── CONFIGURACIÓN ───────────────────────────────────────────────────
+// El repo es público: los correos reales NO van acá.
+// Creá `config.local.php` en el servidor (está en .gitignore, así que
+// ningún deploy de Git lo pisa ni lo publica) con este contenido:
+//
+//   <?php
+//   return [
+//     'destino'   => 'tucorreo@gmail.com',
+//     'remitente' => 'web@tudominio.com',
+//     'sitio'     => 'Constructora Vera',
+//   ];
+//
+$cfg = is_file(__DIR__ . '/config.local.php')
+    ? (require __DIR__ . '/config.local.php')
+    : [];
+
+define('DESTINO',   $cfg['destino']   ?? '');
+define('REMITENTE', $cfg['remitente'] ?? '');
+define('SITIO',     $cfg['sitio']     ?? 'Constructora Vera');
+
+// Sin configurar todavía → no simulamos un envío exitoso.
+if (DESTINO === '' || REMITENTE === '') {
+    header('Location: index.html?error=1#contacto');
+    exit;
+}
 // ────────────────────────────────────────────────────────────────────
 
 // Sólo POST.

@@ -97,9 +97,12 @@
   .nav-drop{position:relative;}
   .nav-drop > a{display:flex; align-items:center; gap:4px;}
   .nav-drop-menu{
-    display:none; position:absolute; top:100%; left:0; margin-top:8px;
+    display:none; position:absolute; top:100%; left:0; margin-top:0; padding-top:8px;
+    z-index:50;
+  }
+  .nav-drop-menu-inner{
     background:var(--surface); border:1px solid var(--border); border-radius:12px;
-    box-shadow:var(--shadow); padding:10px; min-width:260px; z-index:50;
+    box-shadow:var(--shadow); padding:10px; min-width:260px;
   }
   .nav-drop:hover .nav-drop-menu, .nav-drop:focus-within .nav-drop-menu{display:block;}
   .nav-drop-menu a{display:block; padding:10px 12px; border-radius:8px; font-size:14.5px; text-decoration:none; color:var(--text);}
@@ -364,12 +367,14 @@
       <div class="nav-drop">
         <a href="#servicios">Servicios</a>
         <div class="nav-drop-menu">
-          <a href="/servicios/casas-llave-en-mano/">Casas llave en mano</a>
-          <a href="/servicios/piscinas/">Piscinas de hormigón</a>
-          <a href="/servicios/quinchos/">Quinchos y áreas de asado</a>
-          <a href="/servicios/quintas/">Quintas</a>
-          <a href="/servicios/remodelaciones/">Remodelaciones</a>
-          <a href="/servicios/decks-y-pergolas/">Decks y pérgolas</a>
+          <div class="nav-drop-menu-inner">
+            <a href="/servicios/casas-llave-en-mano/">Casas llave en mano</a>
+            <a href="/servicios/piscinas/">Piscinas de hormigón</a>
+            <a href="/servicios/quinchos/">Quinchos y áreas de asado</a>
+            <a href="/servicios/quintas/">Quintas</a>
+            <a href="/servicios/remodelaciones/">Remodelaciones</a>
+            <a href="/servicios/decks-y-pergolas/">Decks y pérgolas</a>
+          </div>
         </div>
       </div>
       <a href="/precios/">Precios</a>

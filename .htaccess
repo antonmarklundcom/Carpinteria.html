@@ -26,6 +26,8 @@ ServerSignature Off
 
 DirectoryIndex index.html index.php
 
+ErrorDocument 404 /404.html
+
 # ── Cabeceras ───────────────────────────────────────────────────────
 <IfModule mod_headers.c>
     Header always set X-Content-Type-Options "nosniff"

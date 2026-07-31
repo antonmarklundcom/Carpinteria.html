@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://cornflowerblue-frog-810812.hostingersite.com/sitemap.xml
